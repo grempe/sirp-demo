@@ -6,6 +6,7 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    rake (11.1.2)
     rbnacl (3.4.0)
       ffi
     rbnacl-libsodium (1.0.10)
@@ -26,8 +27,12 @@ PLATFORMS
 
 DEPENDENCIES
   puma (~> 3.4)
+  rake (~> 11.1)
   sinatra (~> 1.4)
   sirp (~> 2.0.0.pre)
+
+RUBY VERSION
+   ruby 2.3.1p112
 
 BUNDLED WITH
    1.12.1
