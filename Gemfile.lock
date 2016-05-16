@@ -1,0 +1,33 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ffi (1.9.10)
+    puma (3.4.0)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rbnacl (3.4.0)
+      ffi
+    rbnacl-libsodium (1.0.10)
+      rbnacl (>= 3.0.1)
+    securer_randomer (0.1.6)
+      rbnacl (~> 3.3)
+    sinatra (1.4.7)
+      rack (~> 1.5)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
+    sirp (2.0.0.pre)
+      rbnacl-libsodium (~> 1.0)
+      securer_randomer (~> 0.1.0)
+    tilt (2.0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  puma (~> 3.4)
+  sinatra (~> 1.4)
+  sirp (~> 2.0.0.pre)
+
+BUNDLED WITH
+   1.12.1
