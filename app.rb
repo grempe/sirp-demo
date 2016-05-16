@@ -37,7 +37,10 @@ class User < Ohm::Model
   index :username
 end
 
-# User.create(SIRP::Verifier.new(4096).generate_userauth('leonardo', 'capricciosa')).save
+# Create one user for us to work with.
+unless User.find(username: 'leonardo').first
+  User.create(SIRP::Verifier.new(4096).generate_userauth('leonardo', 'capricciosa')).save
+end
 
 before do
   content_type 'application/json'
