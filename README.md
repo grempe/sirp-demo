@@ -4,7 +4,7 @@
 
 This is the code for a live demo version of the [SiRP Ruby Gem](https://github.com/grempe/sirp)
 
-You can try out an interactive version of this demo code at [https://sirp-demo.herokuapp.com/](https://sirp-demo.herokuapp.com/)
+You can try out an interactive version of this demo code at [https://sirp-demo.herokuapp.com/index.html](https://sirp-demo.herokuapp.com/index.html)
 
 ## Development
 
