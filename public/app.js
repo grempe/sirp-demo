@@ -23,7 +23,6 @@ function registerUser (username, password) {
       }, 'json')
       .fail(function() {
         $('#statusP0').append('P0 : ERROR : User registration failed! Duplicate user?\n')
-
       })
     })
   })
@@ -73,7 +72,13 @@ function loginUser (username, password) {
           $('#statusP2').append('P2 : ERROR : Auth Failed : Client and server H_AMK did not match.')
         }
       }, 'json')
+      .fail(function() {
+        $('#statusP1').append('P2 : ERROR : Attempt to authenticate failed. Unknown user?\n')
+      })
     }, 'json')
+    .fail(function() {
+      $('#statusP1').append('P1 : ERROR : Attempt to authenticate failed. Unknown user?\n')
+    })
   })
 }
 

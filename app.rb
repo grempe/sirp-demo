@@ -61,6 +61,12 @@ get '/' do
   redirect '/index.html'
 end
 
+# empty the test db
+get '/flush' do
+  Ohm.flush
+  redirect '/index.html'
+end
+
 post '/users' do
   if params[:username] && params[:username] =~ /^[a-zA-Z0-9\.\@]+/ && params[:salt] && params[:verifier]
     if User.find(username: params[:username]).first
