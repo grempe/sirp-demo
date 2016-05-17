@@ -2,6 +2,8 @@ function resetUI() {
   $('#statusP0').html('')
   $('#statusP1').html('')
   $('#statusP2').html('')
+  $('#loginMessage').html('')
+  $('#regMessage').html('')
 }
 
 function registerUser (username, password) {
@@ -17,13 +19,14 @@ function registerUser (username, password) {
 
       $('#statusP0').append('P0 : START\n')
       $('#statusP0').append('P0 : username : ' + username + '\n')
-      $('#statusP0').append('P0 : password : ' + password + '\n')
+      $('#statusP0').append('P0 : password : ******\n')
       $('#statusP0').append('P0 : salt : ' + result.salt + '\n')
       $('#statusP0').append('P0 : verifier : ' + result.verifier + '\n')
 
       $('#statusP0').append('P0 : POST username, salt, and verifier registration data to server\n')
       $.post('/users', { username: username, salt: result.salt, verifier: result.verifier }, function (data) {
-        $('#statusP0').append('P0 : User registration successful\n')
+        $('#regMessage').html('REGISTERED')
+
         $('#statusP0').append('P0 : Server returned user.username: ' + data.user.username + '\n')
         $('#statusP0').append('P0 : Server returned user.salt: ' + data.user.salt + '\n')
       }, 'json')
@@ -72,7 +75,7 @@ function loginUser (username, password) {
         if (client.checkServerProof(data.H_AMK)) {
           $('#statusP2').append('P2 : H_AMK values match!\n')
           $('#statusP2').append('P2 : Shared Secret K : ' + client.getSharedKey() + '\n')
-          $('#statusP2').append('\nAUTHENTICATED!')
+          $('#loginMessage').html('AUTHENTICATED')
         } else {
           $('#statusP2').append('P2 : ERROR : Auth Failed : Client and server H_AMK did not match.')
         }
