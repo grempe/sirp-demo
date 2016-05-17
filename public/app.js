@@ -33,6 +33,7 @@ function loginUser (username, password) {
   var client = new jsrp.client()
 
   $('#statusP1').html('')
+  $('#statusP2').html('')
 
   client.init({ username: username, password: password }, function () {
     // Phase 1
