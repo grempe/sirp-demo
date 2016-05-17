@@ -1,7 +1,13 @@
+function resetUI() {
+  $('#statusP0').html('')
+  $('#statusP1').html('')
+  $('#statusP2').html('')
+}
+
 function registerUser (username, password) {
   var client = new jsrp.client()
 
-  $('#statusP0').html('')
+  resetUI()
 
   client.init({ username: username, password: password }, function () {
     client.createVerifier(function (err, result) {
@@ -31,8 +37,7 @@ function registerUser (username, password) {
 function loginUser (username, password) {
   var client = new jsrp.client()
 
-  $('#statusP1').html('')
-  $('#statusP2').html('')
+  resetUI()
 
   client.init({ username: username, password: password }, function () {
     // Phase 1
