@@ -6,6 +6,8 @@ This is the code for a live demo version of the [SiRP Ruby Gem](https://github.c
 
 You can try out an interactive version of this demo code at [https://sirp-demo.herokuapp.com/index.html](https://sirp-demo.herokuapp.com/index.html)
 
+The demo stores data in a Redis DB and is periodically flushed.
+
 ## Development
 
 ```

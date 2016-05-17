@@ -9,15 +9,58 @@
 <body>
     <h1>SiRP Demo : Secure (interoperable) Remote Password Authentication</h1>
 
+    <h2>Usage</h2>
+
     <p>
         This is a demo of the <a href="https://github.com/grempe/sirp">SiRP Ruby Gem</a>,
         and the <a href="https://github.com/alax/jsrp">JSRP Javascript client</a>.
         The code for this example can be found on Github at <a href="https://github.com/grempe/sirp-demo">grempe/sirp-demo</a>
     </p>
 
-    <h2>Authentication : Phase 0 (Setup)</h2>
+    <p>
+        To use this demo, first register a username and password (don't use
+        anything you would'nt want exposed please. This test service
+        is not hardened.).
+
+        Once that step is complete use the same credentials to login using SRP.
+    </p>
+
+    <h2>User Registration</h2>
+
+    <p>
+      In this step a new user is registered by generating a salt and verifier in
+      the browser and posting those attributes to the /users endoint on the server.
+    </p>
+
+    <form id='register'>
+      username:<br>
+      <input id='regUsername' type='text' name='username'><br>
+      password:<br>
+      <input id='regPassword' type='password' name='password'>
+      <input id='regButton' type='button' value='Register'>
+    </form>
+
     <pre id='statusP0'></pre>
     <br/>
+
+    <h2>User Login</h2>
+
+    <p>
+      In this step an existing user is requests an SRP protocol login. The first
+      step is to retrieve the user's 'salt' and the server's 'B' values from
+      the server and use those to bootstrap the rest of the authentication
+      process.
+    </p>
+
+    <form id='login'>
+      username:<br>
+      <input id='loginUsername' type='text' name='username'><br>
+      password:<br>
+      <input id='loginPassword' type='password' name='password'>
+      <input id='loginButton' type='button' value='Login'>
+    </form>
+
+    <br>
 
     <h2>Authentication : Phase 1</h2>
     <pre id='statusP1'></pre>
@@ -25,10 +68,6 @@
 
     <h2>Authentication : Phase 2</h2>
     <pre id='statusP2'></pre>
-    <br/>
-
-    <h2>Authentication : Errors</h2>
-    <pre id='statusErr'></pre>
     <br/>
 
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>

@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-# require 'rubygems'
-# require 'bundler/setup'
+require 'rubygems'
+require 'bundler/setup'
 require 'sinatra'
 require 'json'
 require 'hashie'
 require 'ohm'
+require 'ohm/json'
 require 'ohm/contrib'
 require 'sirp'
 require 'logger'
@@ -26,6 +27,11 @@ if ENV['REDIS_URL']
   Ohm.redis = Redic.new(ENV['REDIS_URL'])
 end
 
+# Empty redis on each server reload except in prod.
+unless ENV['REDIS_URL']
+  Ohm.flush
+end
+
 class User < Ohm::Model
   include Ohm::DataTypes
 
@@ -35,6 +41,11 @@ class User < Ohm::Model
   attribute :proof, Type::Hash
   unique :username
   index :username
+
+  # by default to_hash only returns id
+  def to_hash
+    super.merge(username: username, salt: salt)
+  end
 end
 
 # Create one user for us to work with.
@@ -51,40 +62,36 @@ get '/' do
 end
 
 post '/users' do
-  if params[:username] && params[:username] =~ /^[a-zA-Z\.\@]+/ && params[:salt] && params[:verifier]
+  if params[:username] && params[:username] =~ /^[a-zA-Z0-9\.\@]+/ && params[:salt] && params[:verifier]
     if User.find(username: params[:username]).first
       logger.warn "Username #{params[:username]} already exists"
-      halt 409, 'user_conflict'
+      halt 400, JSON.generate(msg: 'user conflict')
     end
 
-    User.create(username: params[:username], salt: params[:salt], verifier: params[:verifier]).save
-    halt 201, 'user_created'
+    u = User.create(username: params[:username], salt: params[:salt], verifier: params[:verifier]).save
+    return JSON.generate(user: u.to_hash)
   else
-    halt 400, 'user_missing_params'
+    halt 400, JSON.generate(msg: 'missing parameters')
   end
 end
 
 get '/users/:username' do
-  if params[:username] && params[:username] =~ /^[a-zA-Z\.\@]+/
+  if params[:username] && params[:username] =~ /^[a-zA-Z0-9\.\@]+/
     user = User.find(username: params[:username]).first
-    return JSON.generate(user.attributes) if user
-    halt 404
-  else
-    halt 400, 'user_missing_params'
+    return JSON.generate(salt: user.salt, B: user.proof['B']) if user && user.salt && user.proof['B']
+    halt 404, JSON.generate(msg: 'user not found')
   end
 end
 
 post '/authenticate' do
-  if params[:username] && params[:username] =~ /^[a-zA-Z\.\@]+/
+  if params[:username] && params[:username] =~ /^[a-zA-Z0-9\.\@]+/
     user = User.find(username: params[:username]).first
 
     unless user && user.username && user.salt && user.verifier
-      logger.warn "User #{params[:username]} not found"
-      halt 401
+      halt 404, JSON.generate(msg: 'user not found')
     end
   else
-    logger.warn 'Username must be present and valid'
-    halt 401
+    halt 400, JSON.generate(msg: 'username parameter must be present and valid')
   end
 
   if params[:A]
@@ -96,7 +103,7 @@ post '/authenticate' do
     verifier = SIRP::Verifier.new(prime_length)
     session = verifier.get_challenge_and_proof(user.username, user.verifier, user.salt, params[:A])
 
-    logger.info 'P1 : Server persisting user verifier (proof)'
+    logger.info 'P1 : Server persisting user proof to DB'
     user.proof = session[:proof]
     user.save
 
@@ -126,5 +133,5 @@ post '/authenticate' do
     end
   end
 
-  halt 401
+  halt 401, JSON.generate(msg: 'unauthorized')
 end
