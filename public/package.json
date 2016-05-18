@@ -9,7 +9,9 @@
   "author": "",
   "license": "New BSD",
   "dependencies": {
+    "fast-sha256": "^1.0.0",
     "jquery": "^2.2.3",
-    "jsrp": "^0.2.0"
+    "jsrp": "^0.2.0",
+    "scrypt-async": "^1.2.0"
   }
 }
