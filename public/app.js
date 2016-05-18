@@ -1,4 +1,4 @@
-function resetUI() {
+function resetUI () {
   $('#statusP0').html('')
   $('#statusP1').html('')
   $('#statusP2').html('')
@@ -53,7 +53,7 @@ function loginUser (username, password) {
 
     $('#statusP1').append('P1 : Sending username and A to server\n')
 
-    $.post('/authenticate', { username: username, A: A }, function (data) {
+    $.post('/challenge', { username: username, A: A }, function (data) {
       $('#statusP1').append('P1 : Received salt : ' + data.salt + '\n')
       client.setSalt(data.salt)
       $('#statusP1').append('P1 : Received B : ' + data.B + '\n')
