@@ -40,6 +40,8 @@ class User < Ohm::Model
   attribute :verifier
   attribute :proof, Type::Hash
   unique :username
+  unique :salt
+  unique :verifier
   index :username
 
   # by default to_hash only returns id
