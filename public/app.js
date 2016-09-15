@@ -1,3 +1,5 @@
+/* global $, jsrp */
+
 function resetUI () {
   $('#statusP0').html('')
   $('#statusP1').html('')
@@ -11,6 +13,9 @@ function registerUser (username, password) {
 
   resetUI()
 
+  // debug
+  // var a = new Uint8Array('60975527035cf2ad1989806f0407210bc81edc04e2762a56afd529ddda2d4393', 'hex')
+  // client.debugInit({ username: username, password: password, length: 4096, a: a }, function () {
   client.init({ username: username, password: password }, function () {
     client.createVerifier(function (err, result) {
       if (err) {
@@ -30,7 +35,7 @@ function registerUser (username, password) {
         $('#statusP0').append('P0 : Server returned user.username: ' + data.user.username + '\n')
         $('#statusP0').append('P0 : Server returned user.salt: ' + data.user.salt + '\n')
       }, 'json')
-      .fail(function() {
+      .fail(function () {
         $('#statusP0').append('P0 : ERROR : User registration failed! Duplicate user?\n')
       })
     })
@@ -42,6 +47,9 @@ function loginUser (username, password) {
 
   resetUI()
 
+  // debug
+  // var a = new Uint8Array('60975527035cf2ad1989806f0407210bc81edc04e2762a56afd529ddda2d4393', 'hex')
+  // client.debugInit({ username: username, password: password, length: 4096, a: a }, function () {
   client.init({ username: username, password: password }, function () {
     // Phase 1
     // Send : username and A
@@ -58,6 +66,11 @@ function loginUser (username, password) {
       client.setSalt(data.salt)
       $('#statusP1').append('P1 : Received B : ' + data.B + '\n')
       client.setServerPublicKey(data.B)
+
+      $('#statusP1').append('P1 : calc M : A : ' + client.ABuf.toString('hex') + '\n')
+      $('#statusP1').append('P1 : calc M : B : ' + client.BBuf.toString('hex') + '\n')
+      $('#statusP1').append('P1 : calc M : S : ' + client.SBuf.toString('hex') + '\n')
+      $('#statusP1').append('P1 : calc M : K : ' + client.KBuf.toString('hex') + '\n')
 
       var clientM = client.getProof()
       $('#statusP1').append('P1 : calculated client M : ' + clientM + '\n')
@@ -80,11 +93,11 @@ function loginUser (username, password) {
           $('#statusP2').append('P2 : ERROR : Auth Failed : Client and server H_AMK did not match.')
         }
       }, 'json')
-      .fail(function() {
+      .fail(function () {
         $('#statusP1').append('P2 : ERROR : Attempt to authenticate failed. Unknown user?\n')
       })
     }, 'json')
-    .fail(function() {
+    .fail(function () {
       $('#statusP1').append('P1 : ERROR : Attempt to authenticate failed. Unknown user?\n')
     })
   })
@@ -99,5 +112,6 @@ $(document).ready(function () {
 
   $('#loginButton').click(function () {
     loginUser($('#loginUsername').val(), $('#loginPassword').val())
+    // loginUser('leonardo', 'icnivad')
   })
 })

@@ -154,6 +154,11 @@ post '/authenticate' do
   logger.info 'P2 : Verifying client/server M match, generating H_AMK'
   verifier = SIRP::Verifier.new(prime_length)
   server_H_AMK = verifier.verify_session(proof, client_M)
+
+  logger.info "P2 : server A: #{verifier.A}"
+  logger.info "P2 : server B: #{verifier.B}"
+  logger.info "P2 : server S: #{verifier.S}"
+  logger.info "P2 : server K: #{verifier.K}"
   logger.info "P2 : server M: #{verifier.M}"
 
   if server_H_AMK
