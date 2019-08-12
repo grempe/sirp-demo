@@ -21,6 +21,7 @@ GEM
     http_parser.rb (0.6.0)
     nest (3.0.0)
       redic
+    nio4r (2.4.0)
     ohm (3.1.1)
       nest (~> 3)
       redic (~> 1.5.0)
@@ -28,7 +29,8 @@ GEM
     ohm-contrib (3.0.0)
       ohm (~> 3.0)
     public_suffix (2.0.5)
-    puma (3.7.0)
+    puma (4.1.0)
+      nio4r (~> 2.0)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
@@ -66,7 +68,7 @@ DEPENDENCIES
   http (~> 2.0)
   ohm (~> 3.0)
   ohm-contrib (~> 3.0)
-  puma (~> 3.6)
+  puma (~> 4.1)
   rake
   sinatra (~> 1.4)
   sirp (= 2.0.0)
