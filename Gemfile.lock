@@ -34,7 +34,7 @@ GEM
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
-    rake (12.0.0)
+    rake (12.3.3)
     rbnacl (4.0.1)
       ffi
     rbnacl-libsodium (1.0.11)
