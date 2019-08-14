@@ -4,7 +4,7 @@ ruby '2.4.0'
 
 gem 'bundler'
 gem 'rake'
-gem 'foreman', '~> 0.81'
+gem 'foreman', '~> 0.85'
 gem 'puma', '~> 4.1'
 gem 'sinatra', '~> 1.4'
 gem 'http', '~> 2.0'
