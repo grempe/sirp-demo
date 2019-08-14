@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.0'
+ruby '2.6.0'
 
 gem 'bundler'
 gem 'rake'
@@ -11,4 +11,4 @@ gem 'http', '~> 4.1'
 gem 'hashie', '~> 3.6'
 gem 'ohm', '~> 3.0'
 gem 'ohm-contrib', '~> 3.0'
-gem 'sirp', '2.0.0'
+gem 'sirp', '2.0.1'
