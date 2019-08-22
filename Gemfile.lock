@@ -32,15 +32,15 @@ GEM
     puma (4.1.0)
       nio4r (~> 2.0)
     rack (2.0.7)
-    rack-protection (2.0.5)
+    rack-protection (2.0.7)
       rack
     rake (12.3.3)
     redic (1.5.0)
       hiredis
-    sinatra (2.0.5)
+    sinatra (2.0.7)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.5)
+      rack-protection (= 2.0.7)
       tilt (~> 2.0)
     sirp (2.0.1)
       sysrandom (~> 1.0)
